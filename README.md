@@ -82,6 +82,8 @@ MIT License - Feel free to use, modify, and distribute.
 
 Inspired by *The Hitchhiker's Guide to the Galaxy* series by Douglas Adams.
 
+Built with Claude (Anthropic).
+
 ---
 
 **Remember:** Don't panic. One thing at a time.
