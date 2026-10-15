@@ -168,8 +168,40 @@ body {
 }
 
 .todo-item:hover .delete-btn,
-.todo-item:hover .copy-btn {
+.todo-item:hover .copy-btn,
+.todo-item:hover .drag-handle {
     opacity: 1;
+}
+
+.todo-item.dragging {
+    position: fixed;
+    z-index: 50;
+    opacity: 0.98;
+    box-shadow: 0 10px 24px var(--dp-shadow);
+    transform: scale(1.03);
+    pointer-events: none;
+    transition: none;
+}
+
+.todo-placeholder {
+    border-radius: 999px;
+    background: var(--dp-hover-bg);
+    margin-bottom: 0;
+}
+
+.drag-handle {
+    opacity: 0;
+    cursor: grab;
+    color: var(--dp-text-secondary);
+    font-size: 14px;
+    margin-right: 8px;
+    user-select: none;
+    touch-action: none;
+    transition: opacity 0.15s ease;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
 }
 
 .checkbox-wrapper {
