@@ -123,6 +123,7 @@ body {
 .todo-list {
     max-height: 350px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .todo-list::-webkit-scrollbar {
@@ -242,8 +243,11 @@ body {
 
 .todo-text {
     flex: 1;
+    min-width: 0;
     font-size: 15px;
     color: var(--dp-text);
+    overflow-wrap: anywhere;
+    word-break: break-word;
     transition: all 0.2s ease;
 }
 
