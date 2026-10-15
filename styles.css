@@ -1,5 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
+:root {
+    /* Light theme (Chrome light NTP / Material palette) */
+    --dp-bg: #f1f3f4;
+    --dp-card-bg: rgba(255, 255, 255, 0.7);
+    --dp-shadow: rgba(60, 64, 67, 0.15);
+    --dp-text: #202124;
+    --dp-text-secondary: #5f6368;
+    --dp-accent: #1a73e8;
+    --dp-accent-glow: rgba(26, 115, 232, 0.08);
+    --dp-danger: #d93025;
+    --dp-danger-bg: rgba(217, 48, 37, 0.1);
+    --dp-scrollbar: rgba(95, 99, 104, 0.3);
+    --dp-scrollbar-hover: rgba(95, 99, 104, 0.5);
+    --dp-hover-bg: rgba(95, 99, 104, 0.08);
+    --dp-title-color: var(--dp-accent);
+
+    /* Input stays constant across both themes (Chrome-search-bar look) */
+    --dp-input-bg: rgba(255, 255, 255, 0.95);
+    --dp-input-bg-focus: rgba(255, 255, 255, 1);
+    --dp-input-text: #202124;
+    --dp-input-placeholder: rgba(95, 99, 104, 0.7);
+    --dp-input-border: #dadce0;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Dark theme (Chrome dark NTP / Material palette) */
+        --dp-bg: #202124;
+        --dp-card-bg: rgba(60, 64, 67, 0.7);
+        --dp-shadow: rgba(0, 0, 0, 0.3);
+        --dp-text: #e8eaed;
+        --dp-text-secondary: #9aa0a6;
+        --dp-accent: #8ab4f8;
+        --dp-accent-glow: rgba(138, 180, 248, 0.08);
+        --dp-danger: #f28b82;
+        --dp-danger-bg: rgba(242, 139, 130, 0.1);
+        --dp-scrollbar: rgba(154, 160, 166, 0.3);
+        --dp-scrollbar-hover: rgba(154, 160, 166, 0.5);
+        --dp-hover-bg: rgba(60, 64, 67, 0.5);
+        --dp-input-border: #5f6368;
+        --dp-title-color: var(--dp-text);
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,8 +52,8 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #3c4043;
-    color: #e8eaed;
+    background: var(--dp-bg);
+    color: var(--dp-text);
     height: 100vh;
     display: flex;
     align-items: flex-start;
@@ -20,22 +64,33 @@ body {
 
 .container {
     width: 420px;
-    background: rgba(55, 59, 62, 0.7);
+    background: var(--dp-card-bg);
     border-radius: 10px;
     padding: 24px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 12px var(--dp-shadow);
     backdrop-filter: blur(10px);
 }
 
 .title {
     text-align: center;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 800;
-    letter-spacing: -3px;
-    color: #e8eaed;
-    margin-bottom: 20px;
+    letter-spacing: normal;
+    color: var(--dp-title-color);
+    margin-bottom: 4px;
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
     text-stroke: 1px rgba(255, 255, 255, 0.2);
+}
+
+.tagline {
+    text-align: center;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--dp-text-secondary);
+    opacity: 0.6;
+    margin-bottom: 20px;
 }
 
 .input-wrapper {
@@ -46,23 +101,23 @@ body {
     width: 100%;
     padding: 11px 18px;
     font-size: 15px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--dp-input-bg);
+    border: 1px solid var(--dp-input-border);
     border-radius: 999px;
-    color: #202124;
+    color: var(--dp-input-text);
     outline: none;
     transition: all 0.2s ease;
     font-family: 'Inter', sans-serif;
 }
 
 .todo-input::placeholder {
-    color: rgba(95, 99, 104, 0.7);
+    color: var(--dp-input-placeholder);
 }
 
 .todo-input:focus {
-    background: rgba(255, 255, 255, 1);
-    border-color: rgba(138, 180, 248, 0.4);
-    box-shadow: 0 0 0 3px rgba(138, 180, 248, 0.08);
+    background: var(--dp-input-bg-focus);
+    border-color: var(--dp-accent);
+    box-shadow: 0 0 0 3px var(--dp-accent-glow);
 }
 
 .todo-list {
@@ -79,19 +134,19 @@ body {
 }
 
 .todo-list::-webkit-scrollbar-thumb {
-    background: rgba(154, 160, 166, 0.3);
+    background: var(--dp-scrollbar);
     border-radius: 4px;
 }
 
 .todo-list::-webkit-scrollbar-thumb:hover {
-    background: rgba(154, 160, 166, 0.5);
+    background: var(--dp-scrollbar-hover);
 }
 
 .todo-item {
     display: flex;
     align-items: center;
-    padding: 8px 14px;
-    margin-bottom: 2px;
+    padding: 5px 14px;
+    margin-bottom: 0;
     border-radius: 999px;
     transition: background 0.15s ease;
     animation: fadeIn 0.3s ease;
@@ -109,10 +164,11 @@ body {
 }
 
 .todo-item:hover {
-    background: rgba(60, 64, 67, 0.5);
+    background: var(--dp-hover-bg);
 }
 
-.todo-item:hover .delete-btn {
+.todo-item:hover .delete-btn,
+.todo-item:hover .copy-btn {
     opacity: 1;
 }
 
@@ -125,7 +181,7 @@ body {
     appearance: none;
     width: 18px;
     height: 18px;
-    border: 2px solid #5f6368;
+    border: 2px solid var(--dp-text-secondary);
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -133,12 +189,12 @@ body {
 }
 
 .checkbox:hover {
-    border-color: #8ab4f8;
+    border-color: var(--dp-accent);
 }
 
 .checkbox:checked {
-    background: #8ab4f8;
-    border-color: #8ab4f8;
+    background: var(--dp-accent);
+    border-color: var(--dp-accent);
 }
 
 .checkbox:checked::after {
@@ -155,7 +211,7 @@ body {
 .todo-text {
     flex: 1;
     font-size: 15px;
-    color: #e8eaed;
+    color: var(--dp-text);
     transition: all 0.2s ease;
 }
 
@@ -164,34 +220,44 @@ body {
     opacity: 0.5;
 }
 
-.delete-btn {
+.delete-btn,
+.copy-btn {
     opacity: 0;
     background: none;
     border: none;
-    color: #9aa0a6;
-    font-size: 18px;
+    color: var(--dp-text-secondary);
+    font-size: 16px;
     cursor: pointer;
     padding: 4px 8px;
     transition: all 0.15s ease;
     border-radius: 4px;
 }
 
+.delete-btn {
+    font-size: 18px;
+}
+
 .delete-btn:hover {
-    color: #f28b82;
-    background: rgba(242, 139, 130, 0.1);
+    color: var(--dp-danger);
+    background: var(--dp-danger-bg);
+}
+
+.copy-btn:hover {
+    color: var(--dp-accent);
+    background: var(--dp-accent-glow);
 }
 
 .counter {
     text-align: right;
     margin-top: 16px;
     font-size: 12px;
-    color: #9aa0a6;
+    color: var(--dp-text-secondary);
 }
 
 .empty-state {
     text-align: center;
     padding: 40px 20px;
-    color: #9aa0a6;
+    color: var(--dp-text-secondary);
     font-size: 14px;
     font-style: italic;
 }

@@ -7,7 +7,8 @@
     "newtab": "newtab.html"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "theme"
   ],
   "icons": {
     "16": "icon.png",

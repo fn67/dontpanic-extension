@@ -21,6 +21,26 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     }
 });
 
+// Use Chrome's own browser color (if the user picked one) as the title accent
+function applyThemeAccent() {
+    if (!chrome.theme || !chrome.theme.getCurrent) return;
+    chrome.theme.getCurrent((theme) => {
+        const colors = theme && theme.colors;
+        const rgb = colors && (colors.frame || colors.toolbar || colors.ntp_background);
+        if (rgb && rgb.length >= 3) {
+            document.documentElement.style.setProperty('--dp-title-color', `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
+        } else {
+            document.documentElement.style.removeProperty('--dp-title-color');
+        }
+    });
+}
+
+applyThemeAccent();
+
+if (chrome.theme && chrome.theme.onUpdated) {
+    chrome.theme.onUpdated.addListener(applyThemeAccent);
+}
+
 // Add todo on Enter
 input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && input.value.trim()) {
@@ -51,6 +71,13 @@ list.addEventListener('click', (e) => {
         const id = parseInt(todoItem.dataset.id);
         deleteTodo(id);
     }
+
+    // Handle copy button clicks
+    if (e.target.classList.contains('copy-btn')) {
+        const todoItem = e.target.closest('.todo-item');
+        const id = parseInt(todoItem.dataset.id);
+        copyTodoText(id, e.target);
+    }
 });
 
 function addTodo(text) {
@@ -79,6 +106,18 @@ function deleteTodo(id) {
     render();
 }
 
+function copyTodoText(id, btn) {
+    const todo = todos.find(t => t.id === id);
+    if (!todo) return;
+    navigator.clipboard.writeText(todo.text).then(() => {
+        const original = btn.textContent;
+        btn.textContent = '✓';
+        setTimeout(() => {
+            btn.textContent = original;
+        }, 1000);
+    });
+}
+
 function saveTodos() {
     chrome.storage.local.set({ todos: todos });
 }
@@ -104,6 +143,7 @@ function render() {
                 >
             </div>
             <div class="todo-text">${escapeHtml(todo.text)}</div>
+            <button class="copy-btn" title="Copy">⧉</button>
             <button class="delete-btn">×</button>
         </div>
     `).join('');
